@@ -18,6 +18,21 @@ const reducer = (state = [], action) => {
   }
 };
 
+const addToDo = (text) => {
+  store.dispatch({ type: ADD_TODO, text });
+};
+
+const deleteToDo = () => {
+  console.log("삭제");
+};
+
+const onSubmit = (event) => {
+  event.preventDefault();
+  const toDo = input.value;
+  input.value = "";
+  addToDo(toDo);
+};
+
 const store = createStore(reducer);
 
 store.subscribe(() => console.log(store.getState()));
@@ -27,23 +42,16 @@ const paintToDos = () => {
   ul.innerHTML = "";
   toDos.forEach((toDo) => {
     const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.innerText = "❌";
+    btn.addEventListener("click", deleteToDo);
     li.id = toDo.id;
-    li.innerText = toDo.text;
+    li.innerText = toDo.text + " ";
+    li.append(btn);
     ul.append(li);
   });
 };
 
 store.subscribe(paintToDos);
-
-const addToDo = (text) => {
-  store.dispatch({ type: ADD_TODO, text });
-};
-
-const onSubmit = (event) => {
-  event.preventDefault();
-  const toDo = input.value;
-  input.value = "";
-  addToDo(toDo);
-};
 
 form.addEventListener("submit", onSubmit);
