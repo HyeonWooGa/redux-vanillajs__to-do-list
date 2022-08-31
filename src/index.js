@@ -24,6 +24,7 @@ store.subscribe(() => console.log(store.getState()));
 
 const paintToDos = () => {
   const toDos = store.getState();
+  ul.innerHTML = "";
   toDos.forEach((toDo) => {
     const li = document.createElement("li");
     li.id = toDo.id;
